@@ -1,4 +1,5 @@
 from datetime import datetime,timedelta
+import time
 import csv
 import requests,io,zipfile
 from selenium import webdriver
@@ -12,7 +13,7 @@ def downloadBhavCopyZip(bhavCopyBseUrl):
     downloadedFile = None
     
     #settting dateof today
-    today = datetime.now()- timedelta(days=2)
+    today = datetime.now()- timedelta(days=1)
     dd = today.strftime('%d')
     mm = today.strftime('%b')
     yyyy = today.strftime('%Y')
@@ -30,10 +31,10 @@ def downloadBhavCopyZip(bhavCopyBseUrl):
 
     #Click submit button
     driver.find_element_by_xpath('//*[@id="ContentPlaceHolder1_btnSubmit"]').click()
-    
-    #Click on download link
-    driver.find_element_by_xpath('//*[@id="ContentPlaceHolder1_btnSubmit"]').click()
 
+    #wait for 10 sec
+    time.sleep(10)
+    
     try:
         downloadLink = driver.find_element_by_xpath('//*[@id="ContentPlaceHolder1_btnHylSearBhav"]')
         downloadLink = downloadLink.get_attribute('href')
@@ -43,8 +44,9 @@ def downloadBhavCopyZip(bhavCopyBseUrl):
         z.extractall('zips')
         downloadedFile = str('zips'+'/'+z.namelist()[0])
 
-    except NoSuchElementException:
+    except Exception:
         print('No Download available for yesterday !')
+        exit()
     return downloadedFile
 
 #function read the csv file
@@ -81,7 +83,7 @@ def saveDataToRedis(data):
 
 #function to get record by SC_CODE
 def getRecordByScCode(SC_CODE):
-    recod = None
+    record = None
     r = connectRedis()
     if r.exists(SC_CODE):
         record = r.hgetall(SC_CODE)

@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import redis
 
-bhavCopyBseUrl = 'http://www.bseindia.com/markets/equity/EQReports/BhavCopyDebt.aspx?expandable=3'
+bhavCopyBseUrl = 'https://www.bseindia.com/markets/MarketInfo/BhavCopy.aspx'
 
 #function to download zip Bhav Copy file
 def downloadBhavCopyZip(bhavCopyBseUrl):
@@ -19,7 +19,7 @@ def downloadBhavCopyZip(bhavCopyBseUrl):
     yyyy = today.strftime('%Y')
     
     driver = webdriver.Chrome('/home/raj/Downloads/chromedriver_linux64/chromedriver')
-    driver.get('https://www.bseindia.com/markets/MarketInfo/BhavCopy.aspx')
+    driver.get(bhavCopyBseUrl)
     #select day
     driver.find_element_by_xpath("//*[@id='ContentPlaceHolder1_fdate1']/option[text()='%s']"%(dd)).click()
     

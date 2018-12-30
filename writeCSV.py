@@ -3,7 +3,6 @@ import time
 import csv
 import requests,io,zipfile
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import redis
 
 bhavCopyBseUrl = 'https://www.bseindia.com/markets/MarketInfo/BhavCopy.aspx'

@@ -77,7 +77,7 @@ def saveDataToRedis(data):
     r = connectRedis()
     r.flushall()
     for item in data:
-        r.hmset(item['SC_CODE'],item)
+        r.hmset(item['SC_NAME'].strip(),item)
     r.set('dataSaveOn',str(datetime.today().day))
 
 #function to get record by SC_CODE

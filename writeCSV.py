@@ -68,7 +68,8 @@ def readDataFromCsv(filename):
 
 #function to connect redis
 def connectRedis():
-    r = redis.Redis(host='localhost', port=6379, db=0)
+    pool = redis.ConnectionPool(host = 'localhost',port = 6379, db = 0)
+    r = redis.Redis(connection_pool = pool)
     return r
 
 
@@ -81,12 +82,12 @@ def saveDataToRedis(data):
     r.set('dataSaveOn',str(datetime.today().day))
 
 #function to get record by SC_CODE
-def getRecordByScCode(SC_CODE):
-    record = None
+def getRecordByScCode(SC_NAME):
+    retData = []
     r = connectRedis()
-    if r.exists(SC_CODE):
-        record = r.hgetall(SC_CODE)
-    return record
+    retData.append(r.hgetall(SC_NAME))
+
+    return retData
 
 
 

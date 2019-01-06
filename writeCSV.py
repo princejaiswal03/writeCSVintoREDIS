@@ -68,7 +68,7 @@ def readDataFromCsv(filename):
 
 #function to connect redis
 def connectRedis():
-    pool = redis.ConnectionPool(host = 'localhost',port = 6379, db = 0)
+    pool = redis.ConnectionPool(host = '13.233.190.141',port = 6379, db = 0)
     r = redis.Redis(connection_pool = pool)
     return r
 
